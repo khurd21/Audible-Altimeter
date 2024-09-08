@@ -1,0 +1,3 @@
+[submodule "Adafruit_BMP3XX"]
+	path = Adafruit_BMP3XX
+	url = git@github.com:adafruit/Adafruit_BMP3XX.git
