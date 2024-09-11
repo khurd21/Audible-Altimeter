@@ -31,11 +31,12 @@ project(picoboard_blinky C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-include_directories(Adafruit_BMP3XX)
+include_directories(BMP3_SensorAPI)
 
 add_executable(picoboard_blinky
-        blinky.cpp
-        Adafruit_BMP3XX/bmp3.c
+        main.cpp
+        bmp3_communications.cpp
+        BMP3_SensorAPI/bmp3.c
         )
 
 # Modify the below lines to enable/disable output over UART/USB
