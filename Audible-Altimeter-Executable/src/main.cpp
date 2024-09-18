@@ -1,7 +1,7 @@
-#include <Audible-Altimeter/dummy.hpp>
 #include <Audible-Altimeter-Embedded/dummy.hpp>
+#include <Audible-Altimeter/dummy.hpp>
 
 int main() {
-    foo();
-    bar();
+  foo();
+  bar();
 }
