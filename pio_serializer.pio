@@ -31,7 +31,7 @@ public entry_point:
 #include "pico/time.h"
 #include "hardware/clocks.h"
 
-static inline void pio_serialiser_program_init(PIO pio, uint sm, uint offset, uint data_pin,uint clk_pin_base, float clk_div) {
+static inline void pio_serialiser_program_init(PIO pio, uint sm, uint offset, uint data_pin,uint clk_pin_base) {
     pio_gpio_init(pio, data_pin);
     pio_gpio_init(pio, clk_pin_base);
     pio_gpio_init(pio, clk_pin_base + 1);
@@ -53,7 +53,6 @@ static inline void pio_serialiser_program_init(PIO pio, uint sm, uint offset, ui
     sm_config_set_out_shift(&c, false, true, 32);
     sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
 
-    // sm_config_set_clkdiv(&c, clk_div);
     uint sample_rate = 48000;
     uint f_clk_sys = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_SYS);
     sm_config_set_clkdiv(&c, (f_clk_sys * 1000.f) / (sample_rate * 32 * 2.0f));  // 32 bits * 2 (clock signal goes high/low every bit)
