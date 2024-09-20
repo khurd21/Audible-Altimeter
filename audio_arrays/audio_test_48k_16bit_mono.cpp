@@ -1,12 +1,9 @@
-#ifndef hello_world_48k_16bit_signed_mono_h
-#define hello_world_48k_16bit_signed_mono_h
+#include "audio_samples.h"
+
 #include <array>
 #include <cstdint>
-#include <cstddef> // for std::size_t
-// constexpr std::size_t hello_world_48k_16bit_signed_mono { 120000 };
 
-
-constexpr inline std::array<std::int16_t, 120'000> hello_world_48k_16bit_signed_mono {
+std::array<std::int16_t, 120000> audio_test_48k_16bit_mono = {
     0,
     3,
     3,
@@ -120006,6 +120003,5 @@ constexpr inline std::array<std::int16_t, 120'000> hello_world_48k_16bit_signed_
     -4514,
     -2759,
     -4200,
-    -6536};
-
-#endif
+    -6536
+};
