@@ -1,14 +1,20 @@
 cmake_minimum_required(VERSION 3.28)
 
-# Initialise pico_sdk from installed location
-# (note this can come from environment, CMake cache etc)
-get_filename_component(CXX_COMPILER_NAME ${CMAKE_CXX_COMPILER} NAME)
+message(STATUS "CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")
+get_filename_component(CXX_COMPILER_NAME "${CMAKE_CXX_COMPILER}" NAME)
 set(BUILD_TARGET_PICO arm-none-eabi-gcc)
 
-if (${CXX_COMPILER_NAME} STREQUAL ${BUILD_TARGET_PICO})
+if ("${CXX_COMPILER_NAME}" STREQUAL "${BUILD_TARGET_PICO}")
     set(IS_PICO TRUE)
+else()
+    set(IS_PICO FALSE)
 endif()
 
+message(STATUS "IS PICO: ${IS_PICO}")
+
+
+# Initialise pico_sdk from installed location
+# (note this can come from environment, CMake cache etc)
 if (${IS_PICO})
 
     # == DO NEVER EDIT THE NEXT LINES for Raspberry Pi Pico VS Code Extension to work ==
@@ -39,7 +45,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
-
 
 add_subdirectory(${THIRD_PARTY_DIR})
 add_subdirectory(Audible-Altimeter-Embedded)

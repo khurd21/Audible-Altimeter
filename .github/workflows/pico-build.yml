@@ -1,0 +1,45 @@
+name: Build for Raspberry Pi Pico
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Set up CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: 'latest'
+
+    - name: Set up Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
+    - name: Set up GCC Arm None EABI
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+
+    - name: Clone Pico SDK
+      run: |
+        git clone --branch 2.0.0 https://github.com/raspberrypi/pico-sdk.git
+        export PICO_SDK_PATH=$GITHUB_WORKSPACE/pico-sdk
+
+    - name: Configure CMake
+      run: |
+        cmake -G Ninja -DPICO_SDK_PATH=$GITHUB_WORKSPACE/pico-sdk -B build
+
+    - name: Build project
+      run: |
+        cmake --build build
+
+    - name: List build files
+      run: |
+        ls -l build

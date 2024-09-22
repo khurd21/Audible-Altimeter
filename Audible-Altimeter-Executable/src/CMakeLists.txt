@@ -1,4 +1,4 @@
-if (NOT ${IS_PICO})
+if (${IS_PICO})
 
 set(EXE_NAME Audible-Altimeter-Executable)
 

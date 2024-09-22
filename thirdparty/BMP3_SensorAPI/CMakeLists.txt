@@ -5,8 +5,7 @@ project(BMP3_SensorAPI)
 add_library(BMP3_SensorAPI STATIC 
     BMP3_SensorAPI/bmp3_defs.h
     BMP3_SensorAPI/bmp3.h
-    BMP3_SensorAPI/bmp3.c
-)
+    BMP3_SensorAPI/bmp3.c)
 add_library(BMP3_SensorAPI::BMP3_SensorAPI ALIAS BMP3_SensorAPI)
 
 target_include_directories(BMP3_SensorAPI PUBLIC 

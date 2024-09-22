@@ -2,14 +2,19 @@ if (NOT ${IS_PICO})
 
 enable_testing()
 
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY git@github.com:google/googletest.git
-  GIT_TAG v1.15.2
-)
-FetchContent_MakeAvailable(googletest)
-# find_package(GTest REQUIRED)
+find_package(GTest QUIET)
+
+if(NOT GTest_FOUND)
+  message(STATUS "GTest not found. Pulling from repository.")
+  include(FetchContent)
+  FetchContent_Declare(
+      googletest
+      GIT_REPOSITORY https://github.com/google/googletest.git
+      GIT_TAG v1.15.2
+  )
+  FetchContent_MakeAvailable(googletest)
+endif()
+
 add_executable(Audible-Altimeter-Tests
   dummy_test.cpp
 )
