@@ -4,6 +4,11 @@ set(include_dir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 set(sources
     altimeter_data.cpp
     runner.cpp
+    audio_player.cpp
+    audio_samples.hpp
+    one.cpp
+    three.cpp
+    two.cpp
     )
 
 set(includes
@@ -12,6 +17,9 @@ set(includes
     ${include_dir}/Audible-Altimeter/device_description_interface.hpp
     ${include_dir}/Audible-Altimeter/barometric_sensor_interface.hpp
     ${include_dir}/Audible-Altimeter/timer_interface.hpp
+    ${include_dir}/Audible-Altimeter/sample_id.hpp
+    ${include_dir}/Audible-Altimeter/audio_driver.hpp
+    ${include_dir}/Audible-Altimeter/audio_player.hpp
     )
 
 add_library(${LIB_NAME} STATIC ${sources} ${includes})

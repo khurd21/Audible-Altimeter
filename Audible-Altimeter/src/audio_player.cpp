@@ -1,17 +1,18 @@
-#include "audio_player.h"
-#include "sample_id.h"
-#include "samples/audio_samples.h"
+#include <Audible-Altimeter/audio_player.hpp>
+#include <Audible-Altimeter/sample_id.hpp>
+#include "audio_samples.hpp"
+
 #include <array>
 #include <cstdint>
 #include <cstddef>
 
-Audio::Audio(AudioDriver const& impl) : m_impl{impl}{}
+Audio::Audio(AudioDriver & impl) : m_impl{impl}{}
 
 bool Audio::play(audio_sample_id_t sample_id) const {
-    assert(sample_id < AUDIO_SAMPLE_ID::NUM_SAMPLES);
+    // assert(sample_id < AUDIO_SAMPLE_ID::NUM_SAMPLES);
     bool rval { false };
     if (sample_id < AUDIO_SAMPLE_ID::NUM_SAMPLES) {
-        rval = m_impl.play(sample_lookup[sample_id].location, sample_lookup[sample_id].size);
+        // rval = m_impl.play(sample_lookup[sample_id].location, sample_lookup[sample_id].size);
     }
     return rval;
 }

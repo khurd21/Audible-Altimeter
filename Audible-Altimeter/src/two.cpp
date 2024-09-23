@@ -1,4 +1,4 @@
-#include "audio_samples.h"
+#include "audio_samples.hpp"
 
 #include <array>
 #include <cstdint>
