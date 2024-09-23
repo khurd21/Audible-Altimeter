@@ -21,6 +21,7 @@ set(includes
 if (${IS_PICO})
     add_library(${LIB_NAME} STATIC ${sources} ${includes})
     add_library(${LIB_NAME}::Audible-Altimeter-Embedded ALIAS ${LIB_NAME})
+    target_include_directories(${LIB_NAME} PUBLIC ${include_dir})
     target_link_libraries(${LIB_NAME} PUBLIC
         hardware_i2c
         hardware_dma
