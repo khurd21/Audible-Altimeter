@@ -1,7 +1,7 @@
-#ifndef _AUDIO_SAMPLES_H
-#define _AUDIO_SAMPLES_H
+#ifndef AUDIBLE_ALTIMETER_AUDIO_SAMPLES_H
+#define AUDIBLE_ALTIMETER_AUDIO_SAMPLES_H
 
-#include "sample_id.h" // NUM_SAMPLES defined here
+#include <Audible-Altimeter/sample_id.hpp>
 
 #include <cstdint>
 #include <array>
@@ -23,4 +23,5 @@ constexpr sample_lookup_t sample_lookup = {
         Audio_sample_location_and_size{ three.data(), three.size() },
         Audio_sample_location_and_size{ one.data(), one.size() },
     };
-#endif // _AUDIO_SAMPLES_H
+
+#endif // AUDIBLE_ALTIMETER_AUDIO_SAMPLES_H

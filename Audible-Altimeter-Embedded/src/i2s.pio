@@ -4,7 +4,7 @@
 ; SPDX-License-Identifier: BSD-3-Clause
 ;
 
-.program pio_serialiser
+.program pio_i2s
 .side_set 2
 ; Just serialise a stream of bits. Take 32 bits from each FIFO record. LSB-first.
                     ;        /--- LRCLK
@@ -30,6 +30,7 @@ public entry_point:
 // clk_pin_base is bitclk then lrc
 #include "pico/time.h"
 #include "hardware/clocks.h"
+#include <cstdint>
 
 static inline void pio_i2s_init(PIO pio, uint sm, uint offset, uint data_pin, uint clk_pin_base) {
     pio_gpio_init(pio, data_pin);
@@ -40,7 +41,7 @@ static inline void pio_i2s_init(PIO pio, uint sm, uint offset, uint data_pin, ui
     // pio_sm_set_consecutive_pindirs(pio, sm, clk_pin_base, 3, true);
     // pio_sm_set_consecutive_pindirs(pio, sm, data_pin, 1, true);
 
-    pio_sm_config c = pio_i2s_get_default_config(offset);
+    pio_sm_config c = pio_i2s_program_get_default_config(offset);
 
     uint pin_mask = (0b01 << data_pin) | (0b11 << clk_pin_base); // 0b11 << clock_pin_base
     pio_sm_set_pindirs_with_mask(pio, sm, pin_mask, pin_mask);
