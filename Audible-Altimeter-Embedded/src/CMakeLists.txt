@@ -2,21 +2,24 @@ set(LIB_NAME Audible-Altimeter-Embedded)
 
 set(include_dir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 set(sources
-    dummy.cpp
+    Tiny2350.cpp
     )
 set(includes
-    ${include_dir}/Audible-Altimeter-Embedded/dummy.hpp
+    ${include_dir}/Audible-Altimeter-Embedded/ITiny2350.hpp
+    ${include_dir}/Audible-Altimeter-Embedded/Tiny2350.hpp
     )
 
 if (${IS_PICO})
     add_library(${LIB_NAME} STATIC ${sources} ${includes})
     add_library(${LIB_NAME}::Audible-Altimeter-Embedded ALIAS ${LIB_NAME})
-    target_include_directories(${LIB_NAME} PUBLIC ${include_dir})
-    target_link_libraries(${LIB_NAME} PRIVATE
+    target_link_libraries(${LIB_NAME} PUBLIC
         hardware_i2c
         pico_stdlib
         BMP3_SensorAPI::BMP3_SensorAPI
         )
+
+    target_include_directories(${LIB_NAME} PUBLIC ${include_dir})
+    target_include_directories(${LIB_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../Audible-Altimeter/include)
 else()
     add_library(${LIB_NAME} INTERFACE)
     add_library(${LIB_NAME}::Audible-Altimeter-Embedded ALIAS ${LIB_NAME})

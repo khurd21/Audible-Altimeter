@@ -3,8 +3,10 @@ name: Build and Test for Ubuntu
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -29,7 +31,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ..
+          cmake -DIS_PICO=FALSE ..
           cmake --build . --config Release
 
       - name: Upload Build Artifacts
