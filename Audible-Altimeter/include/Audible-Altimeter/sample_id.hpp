@@ -1,20 +1,18 @@
 #ifndef AUDIBLE_ALTIMETER_SAMPLE_ID_HPP
 #define AUDIBLE_ALTIMETER_SAMPLE_ID_HPP
 
-#include <cstdint>
 #include <array>
+#include <cstdint>
 
-using audio_sample_id_t = std::size_t;
+enum class AUDIO_SAMPLE_ID {
+  BEGIN_SAMPLES = 0,
 
-namespace AUDIO_SAMPLE_ID {
+  TWO = BEGIN_SAMPLES,
+  THREE,
+  ONE,
 
-constexpr audio_sample_id_t BEGIN_SAMPLES { 0 };
-constexpr audio_sample_id_t TWO { 0 };
-constexpr audio_sample_id_t THREE { 1 };
-constexpr audio_sample_id_t ONE { 2 };
-constexpr audio_sample_id_t NUM_SAMPLES { 3 };
-constexpr audio_sample_id_t END_SAMPLES { 3 };
-
+  NUM_SAMPLES,
+  END_SAMPLES = NUM_SAMPLES
 };
 
-#endif // AUDIBLE_ALTIMETER_SAMPLE_ID_HPP
+#endif  // AUDIBLE_ALTIMETER_SAMPLE_ID_HPP
