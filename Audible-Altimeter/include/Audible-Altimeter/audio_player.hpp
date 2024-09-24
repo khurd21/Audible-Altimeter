@@ -1,21 +1,21 @@
 #ifndef AUDIBLE_ALTIMETER_AUDIO_PLAYER_HPP
 #define AUDIBLE_ALTIMETER_AUDIO_PLAYER_HPP
-#include <Audible-Altimeter/sample_id.hpp>
 #include <Audible-Altimeter/audio_driver.hpp>
-
-#include <array>
+#include <Audible-Altimeter/sample_id.hpp>
 #include <cstdint>
 
-class Audio
-{
-public:
-    Audio(AudioDriver & impl);
+constexpr int RAND_INT_IN_AUDIO_PLAYER_H{5};
 
-    bool play(audio_sample_id_t sample_id) const;
+class AudioPlayer {
+ public:
+  AudioPlayer(AudioDriver& impl);
 
-    void set_volume_on_all_samples(std::int16_t new_volume);
+  bool play(AUDIO_SAMPLE_ID sample_id);
 
-private:
-    AudioDriver const& m_impl;
+  void set_volume_on_all_samples(std::int16_t new_volume);
+
+ private:
+  AudioDriver& m_impl;
 };
-#endif // AUDIBLE_ALTIMETER_AUDIO_PLAYER_HPP
+#endif  // AUDIBLE_ALTIMETER_AUDIO_PLAYER_HPP
+// Unable to find executable file at /Users/si/code/pico/vscode_picoexamples/Audbile-Altimeter/build/Audible-Altimeter.elf
