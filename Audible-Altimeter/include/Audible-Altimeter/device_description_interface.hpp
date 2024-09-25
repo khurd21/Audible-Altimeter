@@ -1,15 +1,11 @@
-#ifndef AUDIBLE_ALTIMETER_EMBEDDED_ITINY_2350_HPP
-#define AUDIBLE_ALTIMETER_EMBEDDED_ITINY_2350_HPP
+#ifndef AUDIBLE_ALTIMETER_DEVICE_DESCRIPTION_INTERFACE_HPP
+#define AUDIBLE_ALTIMETER_DEVICE_DESCRIPTION_INTERFACE_HPP
 
 namespace altimeter {
 
-/**
- * @brief
- * The primary interface for communicating with the Tiny2350 device.
- */
-class ITiny2350 {
+class IDeviceDescription {
  public:
-  ~ITiny2350() = default;
+  ~IDeviceDescription() = default;
 
   /**
    * @brief
@@ -27,15 +23,15 @@ class ITiny2350 {
    * @param color The color for which to toggle.
    * @param on True for on, false for off.
    */
-  virtual void toggle_led(Color color, bool on) const = 0;
+  virtual void toggle_led(Color color, bool on) = 0;
 
   /**
    * @brief Toggles all of the colors on the device.
    * @param on True for on, false for off.
    */
-  virtual void toggle_leds(bool on) const = 0;
+  virtual void toggle_leds(bool on) = 0;
 };
 
 }  // namespace altimeter
 
-#endif  // AUDIBLE_ALTIMETER_EMBEDDED_ITINY_2350_HPP
+#endif  // AUDIBLE_ALTIMETER_DEVICE_DESCRIPTION_INTERFACE_HPP

@@ -3,7 +3,8 @@
 
 namespace altimeter {
 
-class ITiny2350;
+class IDeviceDescription;
+;
 
 /**
  * @brief
@@ -15,7 +16,7 @@ class Runner {
   /**
    * @brief Constructs the Runner class.
    */
-  Runner(ITiny2350* tiny_device);
+  Runner(IDeviceDescription* tiny_device);
 
   /**
    * @brief Runs the Runner class.
@@ -23,7 +24,7 @@ class Runner {
   void run();
 
  private:
-  ITiny2350* m_tiny_2350 = nullptr;
+  IDeviceDescription* m_tiny_2350 = nullptr;
 };
 
 }  // namespace altimeter

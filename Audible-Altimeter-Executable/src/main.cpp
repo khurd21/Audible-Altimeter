@@ -1,7 +1,7 @@
 #include <pico/stdio.h>
 
-#include <Audible-Altimeter-Embedded/Tiny2350.hpp>
-#include <Audible-Altimeter/Runner.hpp>
+#include <Audible-Altimeter-Embedded/tiny_2350.hpp>
+#include <Audible-Altimeter/runner.hpp>
 
 int main() {
   // Initialize stdio

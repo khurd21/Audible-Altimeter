@@ -2,11 +2,11 @@ set(LIB_NAME Audible-Altimeter-Embedded)
 
 set(include_dir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 set(sources
-    Tiny2350.cpp
+    board_descriptions.hpp
+    tiny_2350.cpp
     )
 set(includes
-    ${include_dir}/Audible-Altimeter-Embedded/ITiny2350.hpp
-    ${include_dir}/Audible-Altimeter-Embedded/Tiny2350.hpp
+    ${include_dir}/Audible-Altimeter-Embedded/tiny_2350.hpp
     )
 
 if (${IS_PICO})
