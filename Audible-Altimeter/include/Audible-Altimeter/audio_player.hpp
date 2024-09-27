@@ -4,8 +4,6 @@
 #include <Audible-Altimeter/sample_id.hpp>
 #include <cstdint>
 
-constexpr int RAND_INT_IN_AUDIO_PLAYER_H{5};
-
 class AudioPlayer {
  public:
   AudioPlayer(AudioDriver& impl);
@@ -18,4 +16,3 @@ class AudioPlayer {
   AudioDriver& m_impl;
 };
 #endif  // AUDIBLE_ALTIMETER_AUDIO_PLAYER_HPP
-// Unable to find executable file at /Users/si/code/pico/vscode_picoexamples/Audbile-Altimeter/build/Audible-Altimeter.elf
