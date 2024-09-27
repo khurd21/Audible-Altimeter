@@ -7,8 +7,20 @@ set(sources
     audio_player.cpp
     audio_samples.hpp
     one.cpp
-    three.cpp
     two.cpp
+    three.cpp
+    four.cpp
+    # five.cpp
+    # six.cpp
+    # seven.cpp
+    # eight.cpp
+    # nine.cpp
+    # ten.cpp
+    # eleven.cpp
+    # twelve.cpp
+    # thirteen.cpp
+    # fourteen.cpp
+    # fifteen.cpp
     )
 
 set(includes

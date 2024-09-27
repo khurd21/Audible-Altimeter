@@ -15,7 +15,6 @@ set(includes
     ${include_dir}/Audible-Altimeter-Embedded/tiny_2350.hpp
     ${include_dir}/Audible-Altimeter-Embedded/bmp_390.hpp
     ${include_dir}/Audible-Altimeter-Embedded/timer.hpp
-    ${include_dir}/Audible-Altimeter-Embedded/rpi_i2s_audio_driver.hpp
     ${include_dir}/Audible-Altimeter-Embedded/rp2350_i2s_driver.hpp
     )
 
