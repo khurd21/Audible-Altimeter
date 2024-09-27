@@ -11,13 +11,13 @@
 #include "hardware/dma.h"
 
 /**
-* @brief Manages the RP2350 specific hardware peripherals to play I2S audio
-* @note audio must be in signed 16 bit mono pcm encoded 48kHz
-* @details I2S is an audio standard for embedded devices that serializes
-*          audio data into a bit stream. contineu.. TODO.
-* @note This class only uses 1 state machine and 7 instructions of its pio
-*       block.
-*/
+ * @brief Manages the RP2350 specific hardware peripherals to play I2S audio
+ * @note audio must be in signed 16 bit mono pcm encoded 48kHz
+ * @details I2S is an audio standard for embedded devices that serializes
+ *          audio data into a bit stream. contineu.. TODO.
+ * @note This class only uses 1 state machine and 7 instructions of its pio
+ *       block.
+ */
 class RP2350I2SDriver final : public AudioDriver {
  public:
   /**
@@ -29,6 +29,7 @@ class RP2350I2SDriver final : public AudioDriver {
    */
   RP2350I2SDriver(PIO pio_block, uint pio_sm, int dma_channel,
                   uint i2s_data_pin, uint i2s_clock_pin_base);
+  RP2350I2SDriver();
 
   bool play(std::int16_t* buffer, std::size_t buffer_length) override;
   bool is_playing() override;
