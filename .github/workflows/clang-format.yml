@@ -1,0 +1,36 @@
+name: Clang Format Check
+
+on: 
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  clang-format-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install clang-format
+      run: sudo apt-get install clang-format
+
+    - name: Run clang-format
+      run: |
+        find . \( -name '*.cpp' -o -name '*.hpp' \) -not -path "./build/*" | while read file; do
+          clang-format -i "$file"
+        done
+
+    - name: Check for formatting issues
+      run: |
+        if [[ $(git diff --stat) != '' ]]; then
+          echo "Clang-format found differences. Please format your code."
+          git diff
+          exit 1
+        else
+          echo "No formatting issues found."
+        fi

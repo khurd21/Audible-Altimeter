@@ -1,0 +1,53 @@
+name: Build for Raspberry Pi Pico
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Checkout pico-sdk/master
+        uses: actions/checkout@v4
+        with:
+          repository: raspberrypi/pico-sdk
+          submodules: true
+          ref: master
+          path: pico-sdk
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: 'latest'
+
+      - name: Install gcc-arm-non-eabi
+        run: |
+          sudo apt install gcc-arm-none-eabi
+
+      - name: Set up Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Configure CMake
+        run: |
+          cmake -G Ninja -DPICO_SDK_PATH=$GITHUB_WORKSPACE/pico-sdk -DIS_PICO=TRUE -B build
+
+      - name: Build project
+        run: |
+          cmake --build build --config Release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Audible-Altimeter-Executable
+          path: build/Audible-Altimeter-Executable/src/Audible-Altimeter-Executable.uf2
