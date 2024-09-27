@@ -3,11 +3,31 @@ set(LIB_NAME Audible-Altimeter)
 set(include_dir ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 set(sources
     runner.cpp
+    audio_player.cpp
+    audio_samples.hpp
+    one.cpp
+    two.cpp
+    three.cpp
+    four.cpp
+    # five.cpp
+    # six.cpp
+    # seven.cpp
+    # eight.cpp
+    # nine.cpp
+    # ten.cpp
+    # eleven.cpp
+    # twelve.cpp
+    # thirteen.cpp
+    # fourteen.cpp
+    # fifteen.cpp
     )
 
 set(includes
+    ${include_dir}/Audible-Altimeter/audio_driver.hpp
+    ${include_dir}/Audible-Altimeter/audio_player.hpp
     ${include_dir}/Audible-Altimeter/runner.hpp
     ${include_dir}/Audible-Altimeter/device_description_interface.hpp
+    ${include_dir}/Audible-Altimeter/sample_id.hpp
     )
 
 add_library(${LIB_NAME} STATIC ${sources} ${includes})

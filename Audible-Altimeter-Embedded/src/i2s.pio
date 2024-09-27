@@ -1,0 +1,64 @@
+;
+; Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+;
+; SPDX-License-Identifier: BSD-3-Clause
+;
+
+.program pio_i2s
+.side_set 2
+; Just serialise a stream of bits. Take 32 bits from each FIFO record. LSB-first.
+                    ;        /--- LRCLK
+                    ;        |/-- BCLK
+bitloop1:           ;        ||
+    out pins, 1       side 0b10
+    jmp x-- bitloop1  side 0b11
+    out pins, 1       side 0b00
+    set x, 14         side 0b01
+
+bitloop0:
+    out pins, 1       side 0b00
+    jmp x-- bitloop0  side 0b01
+    out pins, 1       side 0b10
+public entry_point:
+    set x, 14         side 0b11
+
+; .wrap_target
+;     out pins, 1
+; .wrap
+
+% c-sdk {
+// clk_pin_base is bitclk then lrc
+#include "pico/time.h"
+#include "hardware/clocks.h"
+#include <cstdint>
+
+static inline void pio_i2s_init(PIO pio, uint sm, uint offset, uint data_pin, uint clk_pin_base) {
+    pio_gpio_init(pio, data_pin);
+    pio_gpio_init(pio, clk_pin_base);
+    pio_gpio_init(pio, clk_pin_base + 1);
+
+
+    // pio_sm_set_consecutive_pindirs(pio, sm, clk_pin_base, 3, true);
+    // pio_sm_set_consecutive_pindirs(pio, sm, data_pin, 1, true);
+
+    pio_sm_config c = pio_i2s_program_get_default_config(offset);
+
+    uint pin_mask = (0b01 << data_pin) | (0b11 << clk_pin_base); // 0b11 << clock_pin_base
+    pio_sm_set_pindirs_with_mask(pio, sm, pin_mask, pin_mask);
+
+
+    sm_config_set_out_pins(&c, data_pin, 1);
+    sm_config_set_sideset_pins(&c, clk_pin_base);
+
+    // sm_config_set_out_shift(&c, true, true, 32);
+    sm_config_set_out_shift(&c, false, true, 32);
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
+
+    uint sample_rate = 48000;
+    uint f_clk_sys = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_SYS);
+    sm_config_set_clkdiv(&c, (f_clk_sys * 1000.f) / (sample_rate * 32 * 2.0f));  // 32 bits * 2 (clock signal goes high/low every bit)
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}
