@@ -4,7 +4,7 @@
 namespace altimeter {
 
 class IDeviceDescription;
-;
+class IBarometricSensor;
 
 /**
  * @brief
@@ -16,7 +16,7 @@ class Runner {
   /**
    * @brief Constructs the Runner class.
    */
-  Runner(IDeviceDescription* tiny_device);
+  Runner(IDeviceDescription* tiny_device, IBarometricSensor* barometric_sensor);
 
   /**
    * @brief Runs the Runner class.
@@ -25,6 +25,7 @@ class Runner {
 
  private:
   IDeviceDescription* m_tiny_2350 = nullptr;
+  IBarometricSensor* m_barometric_sensor = nullptr;
 };
 
 }  // namespace altimeter
