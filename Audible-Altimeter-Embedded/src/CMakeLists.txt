@@ -7,10 +7,12 @@ set(sources
     bmp_390_communications.hpp
     bmp_390_communications.cpp
     tiny_2350.cpp
+    timer.cpp
     )
 set(includes
     ${include_dir}/Audible-Altimeter-Embedded/tiny_2350.hpp
     ${include_dir}/Audible-Altimeter-Embedded/bmp_390.hpp
+    ${include_dir}/Audible-Altimeter-Embedded/timer.hpp
     )
 
 if (${IS_PICO})

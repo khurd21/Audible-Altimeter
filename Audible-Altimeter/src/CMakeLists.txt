@@ -9,6 +9,7 @@ set(includes
     ${include_dir}/Audible-Altimeter/runner.hpp
     ${include_dir}/Audible-Altimeter/device_description_interface.hpp
     ${include_dir}/Audible-Altimeter/barometric_sensor_interface.hpp
+    ${include_dir}/Audible-Altimeter/timer_interface.hpp
     )
 
 add_library(${LIB_NAME} STATIC ${sources} ${includes})
