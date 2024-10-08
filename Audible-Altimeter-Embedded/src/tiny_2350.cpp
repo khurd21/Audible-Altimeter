@@ -48,10 +48,10 @@ void Tiny2350::toggle_led(const Color color, const bool on) {
       gpio_put(board_descriptions::LED_PIN_RED, !on);
       break;
   }
+  printf("\n");
 }
 
 void Tiny2350::toggle_leds(const bool on) {
-  printf("Toggling LEDs: %s", on ? "on" : "off");
   toggle_led(Color::RED, on);
   toggle_led(Color::GREEN, on);
   toggle_led(Color::BLUE, on);
