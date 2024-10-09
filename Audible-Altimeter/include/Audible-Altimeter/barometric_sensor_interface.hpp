@@ -5,22 +5,22 @@
 
 namespace altimeter {
 
-/**
- * @brief
- * Raw sensor data from the barometric sensor.
- *
- * - temperature: Temperature in celsius.
- *
- * - pressure: Pressure in Pascals.
- */
-struct SensorData {
-  double temperature{};
-  double pressure{};
-};
-
 class IBarometricSensor {
  public:
   ~IBarometricSensor() = default;
+
+  /**
+   * @brief
+   * Raw sensor data from the barometric sensor.
+   *
+   * - temperature: Temperature in celsius.
+   *
+   * - pressure: Pressure in Pascals.
+   */
+  struct SensorData {
+    double temperature{};
+    double pressure{};
+  };
 
   /**
    * @brief

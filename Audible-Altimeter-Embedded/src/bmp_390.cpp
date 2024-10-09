@@ -38,7 +38,7 @@ BMP390::BMP390() {
   bmp3_check_rslt("bmp3_set_op_mode", bmp3_set_op_mode(&m_settings, &m_bmp3));
 }
 
-std::optional<SensorData> BMP390::get_sensor_data() {
+std::optional<IBarometricSensor::SensorData> BMP390::get_sensor_data() {
   bmp3_status status;
   const auto result{bmp3_get_status(&status, &m_bmp3)};
   bmp3_check_rslt("bmp3_get_status", result);

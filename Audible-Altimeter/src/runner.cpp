@@ -9,7 +9,7 @@ namespace altimeter {
 Runner::Runner(IDeviceDescription* tiny, IBarometricSensor* barometric_sensor,
                ITimer* timer) {
   m_tiny_2350 = tiny;
-  m_barometric_sensor = barometric_sensor;
+  m_altimeter_data = AltimeterData(barometric_sensor);
   m_timer = timer;
   m_callback_data.callback = &Runner::read_event_callback;
   m_callback_data.user_data = this;
@@ -21,10 +21,10 @@ void Runner::run() {
 };
 
 bool Runner::read_event() {
-  const auto data{m_barometric_sensor->get_sensor_data()};
+  const auto data{m_altimeter_data.get_data()};
   if (data) {
-    printf("Data T: %.2f deg C, P: %.2f Pa\n", data->temperature,
-           data->pressure);
+    printf("Data T: %d degree F, P: %d ft\n", data->temperature,
+           data->altitude);
   }
   return true;
 }
