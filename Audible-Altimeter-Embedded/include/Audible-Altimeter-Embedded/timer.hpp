@@ -13,6 +13,8 @@ class Timer : public ITimer {
   void add_repeating_timer(std::chrono::milliseconds interval,
                            CallbackData& callback_data) override;
 
+  void remove_repeating_timer() override;
+
  private:
   static bool timer_callback(repeating_timer_t* rt);
 
