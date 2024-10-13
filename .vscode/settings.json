@@ -1,4 +1,8 @@
 {
+    "clang-format.executable": "/opt/homebrew/bin/clang-format",
+    "editor.formatOnSave": true,
+    "clang-format.language.cpp.enable": true,
+    "clang-format.language.cpp.style": "Google",
     "cmake.options.statusBarVisibility": "hidden",
     "cmake.options.advanced": {
         "build": {

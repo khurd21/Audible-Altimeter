@@ -16,6 +16,8 @@ class ITimer {
 
   virtual void add_repeating_timer(std::chrono::milliseconds interval,
                                    CallbackData& callback_data) = 0;
+
+  virtual void remove_repeating_timer() = 0;
 };
 
 }  // namespace altimeter
