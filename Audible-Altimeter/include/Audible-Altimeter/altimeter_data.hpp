@@ -21,8 +21,9 @@ class AltimeterData {
   };
 
   AltimeterData() = default;
-  AltimeterData(IBarometricSensor* sensor,
-                MeasurementSystem system = MeasurementSystem::Imperial);
+  explicit AltimeterData(
+      IBarometricSensor* sensor,
+      MeasurementSystem system = MeasurementSystem::Imperial);
 
   std::optional<GatheredData> get_data() const;
   void set_measurement_system(MeasurementSystem system);
