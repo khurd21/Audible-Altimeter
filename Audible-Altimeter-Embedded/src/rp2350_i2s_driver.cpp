@@ -8,6 +8,9 @@
 #include "hardware/dma.h"
 #include "hardware/pio.h"
 #include "i2s.pio.h"
+
+namespace altimeter {
+
 RP2350I2SDriver::RP2350I2SDriver() : m_dma_channel{AUDIO_DMA_CHANNEL} {
   uint pio_offset = pio_add_program(AUDIO_PIO_BLOCK, &pio_i2s_program);
 
@@ -87,3 +90,5 @@ bool RP2350I2SDriver::play(std::int16_t* buffer, std::size_t buffer_length) {
 bool RP2350I2SDriver::is_playing() {
   return dma_channel_is_busy(m_dma_channel);
 }
+
+}  // namespace altimeter

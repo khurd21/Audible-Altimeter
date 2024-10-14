@@ -1,3 +1,4 @@
+#include <Audible-Altimeter/audio_driver_interface.hpp>
 #include <Audible-Altimeter/audio_player.hpp>
 #include <Audible-Altimeter/sample_id.hpp>
 #include <array>
@@ -7,18 +8,18 @@
 
 #include "audio_samples.hpp"
 
-AudioPlayer::AudioPlayer(AudioDriver& impl) : m_impl{impl} {}
+namespace altimeter {
+
+AudioPlayer::AudioPlayer(IAudioDriver* audio_driver)
+    : m_audio_driver(audio_driver) {}
 
 bool AudioPlayer::play(AUDIO_SAMPLE_ID sample_id) {
-  bool rval{false};
-  auto _sample_id{static_cast<std::uint32_t>(sample_id)};
-  if (_sample_id < static_cast<std::uint32_t>(AUDIO_SAMPLE_ID::NUM_SAMPLES)) {
-    rval = m_impl.play(sample_lookup[_sample_id].location,
-                       sample_lookup[_sample_id].size);
-  } else {
-    assert(false);
+  const auto id{static_cast<std::uint32_t>(sample_id)};
+  if (id < static_cast<std::uint32_t>(AUDIO_SAMPLE_ID::NUM_SAMPLES)) {
+    return m_audio_driver->play(sample_lookup[id].location,
+                                sample_lookup[id].size);
   }
-  return rval;
+  return false;
 }
 
 void AudioPlayer::set_volume_on_all_samples(std::int16_t new_volume) {
@@ -31,3 +32,5 @@ void AudioPlayer::set_volume_on_all_samples(std::int16_t new_volume) {
   //     }
   // }
 }
+
+}  // namespace altimeter

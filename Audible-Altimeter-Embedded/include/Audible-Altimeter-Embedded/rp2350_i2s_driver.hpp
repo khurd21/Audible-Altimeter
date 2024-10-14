@@ -4,11 +4,13 @@
 #include <hardware/pio.h>
 #include <stdio.h>
 
-#include <Audible-Altimeter/audio_driver.hpp>
+#include <Audible-Altimeter/audio_driver_interface.hpp>
 #include <cstddef>
 #include <cstdint>
 
 #include "hardware/dma.h"
+
+namespace altimeter {
 
 /**
  * @brief Manages the RP2350 specific hardware peripherals to play I2S audio
@@ -18,7 +20,7 @@
  * @note This class only uses 1 state machine and 7 instructions of its pio
  *       block.
  */
-class RP2350I2SDriver final : public AudioDriver {
+class RP2350I2SDriver final : public IAudioDriver {
  public:
   /**
    * @brief Initializes hardware peripherals
@@ -37,5 +39,7 @@ class RP2350I2SDriver final : public AudioDriver {
  private:
   int m_dma_channel{0};
 };
+
+}  // namespace altimeter
 
 #endif  // RP2350_I2S_AUDIO_DRIVER

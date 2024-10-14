@@ -2,8 +2,11 @@
 #define AUDIBLE_ALTIMETER_RUNNER_HPP
 
 #include <Audible-Altimeter/altimeter_data.hpp>
+#include <Audible-Altimeter/audio_driver_interface.hpp>
+#include <Audible-Altimeter/audio_player.hpp>
 #include <Audible-Altimeter/barometric_sensor_interface.hpp>
 #include <Audible-Altimeter/device_description_interface.hpp>
+#include <Audible-Altimeter/sample_id.hpp>
 #include <Audible-Altimeter/timer_interface.hpp>
 #include <array>
 
@@ -19,8 +22,9 @@ class Runner {
   /**
    * @brief Constructs the Runner class.
    */
-  Runner(IDeviceDescription* tiny_device, IBarometricSensor* barometric_sensor,
-         ITimer* timer);
+  explicit Runner(IDeviceDescription* tiny_device,
+                  IBarometricSensor* barometric_sensor, ITimer* timer,
+                  IAudioDriver* audio_driver);
 
   /**
    * @brief Runs the Runner class.
@@ -43,6 +47,7 @@ class Runner {
 
   ITimer::CallbackData m_callback_data;
   AltimeterData m_altimeter_data;
+  AudioPlayer m_audio_player;
   IDeviceDescription* m_tiny_2350 = nullptr;
   ITimer* m_timer = nullptr;
 };

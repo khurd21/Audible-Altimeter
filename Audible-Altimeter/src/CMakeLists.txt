@@ -30,7 +30,7 @@ set(includes
     ${include_dir}/Audible-Altimeter/barometric_sensor_interface.hpp
     ${include_dir}/Audible-Altimeter/timer_interface.hpp
     ${include_dir}/Audible-Altimeter/sample_id.hpp
-    ${include_dir}/Audible-Altimeter/audio_driver.hpp
+    ${include_dir}/Audible-Altimeter/audio_driver_interface.hpp
     ${include_dir}/Audible-Altimeter/audio_player.hpp
     )
 

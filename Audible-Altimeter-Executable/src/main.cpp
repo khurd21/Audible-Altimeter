@@ -19,23 +19,11 @@ int main() {
   altimeter::Tiny2350 tiny;
   altimeter::BMP390 bmp390;
   altimeter::Timer timer;
+  altimeter::RP2350I2SDriver rp2350_audio_driver;
 
-  RP2350I2SDriver rp2350_audio_driver;
-  AudioPlayer audio_player{rp2350_audio_driver};
-
-  uint audio_id{static_cast<uint>(AUDIO_SAMPLE_ID::BEGIN_SAMPLES)};
-
-  while (true) {
-    sleep_ms(LED_DELAY_MS);
-    audio_player.play(static_cast<AUDIO_SAMPLE_ID>(audio_id));
-
-    ++audio_id;
-    if (audio_id == static_cast<uint>(AUDIO_SAMPLE_ID::END_SAMPLES)) {
-      audio_id = static_cast<uint>(AUDIO_SAMPLE_ID::BEGIN_SAMPLES);
-    }
-  }
+  altimeter::AudioPlayer audio_player(&rp2350_audio_driver);
   // Run the project
-  altimeter::Runner runner(&tiny, &bmp390, &timer);
+  altimeter::Runner runner(&tiny, &bmp390, &timer, &rp2350_audio_driver);
   runner.run();
 
   while (true) {
