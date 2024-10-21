@@ -1,4 +1,5 @@
 {
+    "C_Cpp.default.cppStandard": "c++20",
     "clang-format.executable": "/opt/homebrew/bin/clang-format",
     "editor.formatOnSave": true,
     "clang-format.language.cpp.enable": true,

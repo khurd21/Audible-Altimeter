@@ -1,0 +1,190 @@
+[
+    {
+        "measurement_system": "Imperial",
+        "input_data": [
+            {
+                "temperature_c": 15.0,
+                "pressure_pa": 101325.0
+            },
+            {
+                "temperature_c": 15.0,
+                "pressure_pa": 101325.0
+            }
+        ],
+        "expected_data": [
+            {
+                "altitude": 0,
+                "temperature": 59,
+                "measurement_system": "Imperial"
+            },
+            {
+                "altitude": 0,
+                "temperature": 59,
+                "measurement_system": "Imperial"
+            }
+        ]
+    },
+    {
+        "measurement_system": "Imperial",
+        "input_data": [
+            {
+                "temperature_c": 13,
+                "pressure_pa": 101325
+            },
+            {
+                "temperature_c": 0,
+                "pressure_pa": 60000
+            },
+            {
+                "temperature_c": 15,
+                "pressure_pa": 99852
+            }
+        ],
+        "expected_data": [
+            {
+                "altitude": 0,
+                "temperature": 55,
+                "measurement_system": "Imperial"
+            },
+            {
+                "altitude": 13704,
+                "temperature": 32,
+                "measurement_system": "Imperial"
+            },
+            {
+                "altitude": 401,
+                "temperature": 59,
+                "measurement_system": "Imperial"
+            }
+        ]
+    },
+    {
+        "measurement_system": "Imperial",
+        "input_data": [
+            {
+                "temperature_c": 25.6,
+                "pressure_pa": 100132
+            },
+            {
+                "temperature_c": 32.1,
+                "pressure_pa": 99852
+            },
+            {
+                "temperature_c": 33.2,
+                "pressure_pa": 98852
+            },
+            {
+                "temperature_c": 33.2,
+                "pressure_pa": 88852
+            },
+            {
+                "temperature_c": 25.6,
+                "pressure_pa": 29163
+            }
+        ],
+        "expected_data": [
+            {
+                "altitude": 0,
+                "temperature": 78,
+                "measurement_system": "Imperial"
+            },
+            {
+                "altitude": 80,
+                "temperature": 89,
+                "measurement_system": "Imperial"
+            },
+            {
+                "altitude": 368,
+                "temperature": 91,
+                "measurement_system": "Imperial"
+            },
+            {
+                "altitude": 3390,
+                "temperature": 91,
+                "measurement_system": "Imperial"
+            },
+            {
+                "altitude": 31545,
+                "temperature": 78,
+                "measurement_system": "Imperial"
+            }
+        ]
+    },
+    {
+        "measurement_system": "Metric",
+        "input_data": [
+            {
+                "temperature_c": 9.2,
+                "pressure_pa": 100003
+            },
+            {
+                "temperature_c": 8.7,
+                "pressure_pa": 76309
+            },
+            {
+                "temperature_c": 7.3,
+                "pressure_pa": 53317
+            },
+            {
+                "temperature_c": 5.2,
+                "pressure_pa": 34531
+            }
+        ],
+        "expected_data": [
+            {
+                "altitude": 0,
+                "temperature": 9,
+                "measurement_system": "Metric"
+            },
+            {
+                "altitude": 2178,
+                "temperature": 8,
+                "measurement_system": "Metric"
+            },
+            {
+                "altitude": 4899,
+                "temperature": 7,
+                "measurement_system": "Metric"
+            },
+            {
+                "altitude": 7956,
+                "temperature": 5,
+                "measurement_system": "Metric"
+            }
+        ]
+    },
+    {
+        "measurement_system": "Metric",
+        "input_data": [
+            {
+                "temperature_c": 2.2,
+                "pressure_pa": 99802
+            },
+            {
+                "temperature_c": 1.9,
+                "pressure_pa": 34531
+            },
+            {
+                "temperature_c": 0.3,
+                "pressure_pa": 22321
+            }
+        ],
+        "expected_data": [
+            {
+                "altitude": 0,
+                "temperature": 2,
+                "measurement_system": "Metric"
+            },
+            {
+                "altitude": 7745,
+                "temperature": 1,
+                "measurement_system": "Metric"
+            },
+            {
+                "altitude": 10503,
+                "temperature": 0,
+                "measurement_system": "Metric"
+            }
+        ]
+    }
+]

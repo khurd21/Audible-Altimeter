@@ -45,6 +45,11 @@ jobs:
     needs: build
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -53,9 +58,8 @@ jobs:
 
       - name: Set Executable Permissions
         run: |
-          chmod +x build/Audible-Altimeter/test/Audible-Altimeter-Tests
+          chmod +x build/bin/Audible-Altimeter-Tests
 
       - name: Run Tests
         run: |
-          ls -R
           ctest --output-on-failure --test-dir build/Audible-Altimeter/test

@@ -30,11 +30,12 @@ class AltimeterData {
 
  private:
   int convert_temperature(double temperature_c) const;
-  int calculate_altitude(double pressure_pa) const;
+  int calculate_altitude(double pressure_pa, double temperature_c) const;
 
   IBarometricSensor* m_sensor = nullptr;
   MeasurementSystem m_measurement_system{MeasurementSystem::Imperial};
   mutable std::optional<double> m_baseline_pressure;
+  mutable std::optional<double> m_baseline_temperature;
 };
 
 }  // namespace altimeter

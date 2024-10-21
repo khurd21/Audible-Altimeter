@@ -7,11 +7,17 @@
 #include <array>
 #include <chrono>
 #include <cstdio>
+#include <iostream>
 #include <limits>
 
 namespace {
 
 struct AltitudeToAudioSample {
+  AltitudeToAudioSample() = default;
+  constexpr explicit AltitudeToAudioSample(int altitude,
+                                           AUDIO_SAMPLE_ID sample_id)
+      : altitude(altitude), sample_id(sample_id) {}
+
   int altitude{};
   AUDIO_SAMPLE_ID sample_id{};
 };
@@ -45,12 +51,11 @@ Runner::Runner(IDeviceDescription* tiny, IBarometricSensor* barometric_sensor,
 
   m_state = State::IDLE;
   m_last_altitude_reading = 0;
+
+  m_tiny_2350->toggle_leds(false);
 }
 
-void Runner::run() {
-  m_tiny_2350->toggle_leds(false);
-  enter_state(State::IDLE);
-};
+void Runner::run() { enter_state(State::IDLE); };
 
 bool Runner::read_event() {
   const auto data{m_altimeter_data.get_data()};
