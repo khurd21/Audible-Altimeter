@@ -18,6 +18,10 @@ class IBarometricSensor {
    * - pressure: Pressure in Pascals.
    */
   struct SensorData {
+    SensorData() = default;
+    explicit SensorData(double temperature, double pressure)
+        : temperature(temperature), pressure(pressure) {}
+
     double temperature{};
     double pressure{};
   };

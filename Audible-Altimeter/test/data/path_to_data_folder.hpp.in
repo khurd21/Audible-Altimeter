@@ -1,0 +1,10 @@
+#ifndef PATH_TO_DATA_HPP
+#define PATH_TO_DATA_HPP
+
+#include <string>
+
+namespace altimeter::tests {
+inline constexpr auto k_data_folder = "@DATA_FOLDER@";
+}
+
+#endif  // PATH_TO_DATA_HPP

@@ -19,6 +19,8 @@ namespace altimeter {
  */
 class Runner {
  public:
+  Runner() = default;
+
   /**
    * @brief Constructs the Runner class.
    */

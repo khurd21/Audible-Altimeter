@@ -20,13 +20,13 @@ int main() {
   altimeter::BMP390 bmp390;
   altimeter::Timer timer;
   altimeter::RP2350I2SDriver rp2350_audio_driver;
-
   altimeter::AudioPlayer audio_player(&rp2350_audio_driver);
-  // Run the project
+
   altimeter::Runner runner(&tiny, &bmp390, &timer, &rp2350_audio_driver);
   runner.run();
 
   while (true) {
+    // How many times you called?
     tight_loop_contents();
   }
 }
