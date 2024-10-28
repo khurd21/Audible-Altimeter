@@ -6,13 +6,8 @@
 #include <Audible-Altimeter-Embedded/tiny_2350.hpp>
 #include <Audible-Altimeter/audio_player.hpp>
 #include <Audible-Altimeter/runner.hpp>
-#include <Audible-Altimeter/sample_id.hpp>
-
-#include "pico/stdlib.h"
-#define LED_DELAY_MS 1000
 
 int main() {
-  // Initialize stdio
   stdio_init_all();
 
   // Dependencies for embedded side.
@@ -26,7 +21,6 @@ int main() {
   runner.run();
 
   while (true) {
-    // How many times you called?
     tight_loop_contents();
   }
 }

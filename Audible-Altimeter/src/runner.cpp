@@ -22,19 +22,38 @@ struct AltitudeToAudioSample {
   AUDIO_SAMPLE_ID sample_id{};
 };
 
-constexpr std::array<AltitudeToAudioSample, 8> k_altitudes{
+constexpr std::array<AltitudeToAudioSample, 29> k_altitudes{
     AltitudeToAudioSample(200, AUDIO_SAMPLE_ID::TWO),
     AltitudeToAudioSample(300, AUDIO_SAMPLE_ID::THREE),
     AltitudeToAudioSample(400, AUDIO_SAMPLE_ID::FOUR),
-    AltitudeToAudioSample(1'000, AUDIO_SAMPLE_ID::ONE),
+    AltitudeToAudioSample(500, AUDIO_SAMPLE_ID::FIVE),
+    AltitudeToAudioSample(600, AUDIO_SAMPLE_ID::SIX),
+    AltitudeToAudioSample(700, AUDIO_SAMPLE_ID::SEVEN),
+    AltitudeToAudioSample(800, AUDIO_SAMPLE_ID::EIGHT),
+    AltitudeToAudioSample(900, AUDIO_SAMPLE_ID::NINE),
+    AltitudeToAudioSample(1'000, AUDIO_SAMPLE_ID::TEN),
+    AltitudeToAudioSample(1'500, AUDIO_SAMPLE_ID::FIFTEEN),
     AltitudeToAudioSample(2'000, AUDIO_SAMPLE_ID::TWO),
+    AltitudeToAudioSample(2'500, AUDIO_SAMPLE_ID::TWO_POINT_FIVE),
     AltitudeToAudioSample(3'000, AUDIO_SAMPLE_ID::THREE),
+    AltitudeToAudioSample(3'500, AUDIO_SAMPLE_ID::THREE_POINT_FIVE),
     AltitudeToAudioSample(4'000, AUDIO_SAMPLE_ID::FOUR),
+    AltitudeToAudioSample(4'500, AUDIO_SAMPLE_ID::FOUR_POINT_FIVE),
+    AltitudeToAudioSample(5'000, AUDIO_SAMPLE_ID::FIVE),
+    AltitudeToAudioSample(5'500, AUDIO_SAMPLE_ID::FIVE_POINT_FIVE),
+    AltitudeToAudioSample(6'000, AUDIO_SAMPLE_ID::SIX),
+    AltitudeToAudioSample(7'000, AUDIO_SAMPLE_ID::SEVEN),
+    AltitudeToAudioSample(8'000, AUDIO_SAMPLE_ID::EIGHT),
+    AltitudeToAudioSample(9'000, AUDIO_SAMPLE_ID::NINE),
+    AltitudeToAudioSample(10'000, AUDIO_SAMPLE_ID::TEN),
+    AltitudeToAudioSample(11'000, AUDIO_SAMPLE_ID::ELEVEN),
+    AltitudeToAudioSample(12'000, AUDIO_SAMPLE_ID::TWELVE),
+    AltitudeToAudioSample(13'000, AUDIO_SAMPLE_ID::THIRTEEN),
+    AltitudeToAudioSample(14'000, AUDIO_SAMPLE_ID::FOURTEEN),
+    AltitudeToAudioSample(15'000, AUDIO_SAMPLE_ID::FIFTEEN),
     AltitudeToAudioSample(std::numeric_limits<int>::max(),
                           AUDIO_SAMPLE_ID::END_SAMPLES),
 };
-
-constexpr auto k_one_thousand_index{3};
 
 }  // namespace
 
@@ -65,7 +84,7 @@ bool Runner::read_event() {
   const auto current_altitude{data->altitude};
   if (m_state == State::IDLE && current_altitude > 1'000) {
     enter_state(State::ACTIVE);
-    m_audio_player.play(k_altitudes[m_index].sample_id);
+    m_audio_player.play(AUDIO_SAMPLE_ID::TEN);
   } else if (m_state == State::ACTIVE) {
     const auto previous_index{m_index};
     while (current_altitude > k_altitudes[m_index + 1].altitude) {
