@@ -32,14 +32,10 @@ public entry_point:
 #include "hardware/clocks.h"
 #include <cstdint>
 
-static inline void pio_i2s_init(PIO pio, uint sm, uint offset, uint data_pin, uint clk_pin_base) {
+static inline void pio_i2s_init(PIO pio, uint sm, uint offset, uint data_pin, uint clk_pin_base, uint sample_rate) {
     pio_gpio_init(pio, data_pin);
     pio_gpio_init(pio, clk_pin_base);
     pio_gpio_init(pio, clk_pin_base + 1);
-
-
-    // pio_sm_set_consecutive_pindirs(pio, sm, clk_pin_base, 3, true);
-    // pio_sm_set_consecutive_pindirs(pio, sm, data_pin, 1, true);
 
     pio_sm_config c = pio_i2s_program_get_default_config(offset);
 
@@ -54,9 +50,13 @@ static inline void pio_i2s_init(PIO pio, uint sm, uint offset, uint data_pin, ui
     sm_config_set_out_shift(&c, false, true, 32);
     sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
 
-    uint sample_rate = 48000;
     uint f_clk_sys = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_SYS);
-    sm_config_set_clkdiv(&c, (f_clk_sys * 1000.f) / (sample_rate * 32 * 2.0f));  // 32 bits * 2 (clock signal goes high/low every bit)
+
+    // the sample depth
+    constexpr uint sample_depth = 32;
+    float clk_div = (f_clk_sys * 1000.f) / (sample_rate * sample_depth * 2.0f);
+
+    sm_config_set_clkdiv(&c, clk_div);
 
     pio_sm_init(pio, sm, offset, &c);
     pio_sm_set_enabled(pio, sm, true);

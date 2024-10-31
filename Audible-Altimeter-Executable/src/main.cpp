@@ -1,4 +1,5 @@
 #include <pico/stdio.h>
+#include <pico/stdlib.h>
 
 #include <Audible-Altimeter-Embedded/bmp_390.hpp>
 #include <Audible-Altimeter-Embedded/rp2350_i2s_driver.hpp>
@@ -6,6 +7,12 @@
 #include <Audible-Altimeter-Embedded/tiny_2350.hpp>
 #include <Audible-Altimeter/audio_player.hpp>
 #include <Audible-Altimeter/runner.hpp>
+#include <Audible-Altimeter/timer_interface.hpp>
+
+// bool callback_func(void* data) {
+//   printf("in callback\n");
+//   return true;
+// }
 
 int main() {
   stdio_init_all();

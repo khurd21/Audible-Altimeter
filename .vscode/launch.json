@@ -4,7 +4,7 @@
         {
             "name": "Pico Debug (Cortex-Debug)",
             "cwd": "${userHome}/.pico-sdk/openocd/0.12.0+dev/scripts",
-            "executable": "${command:raspberry-pi-pico.launchTargetPath}",
+            "executable": "${cwd}/build/Audible-Altimeter-Executable/src/Audible-Altimeter-Executable.elf",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",
@@ -21,7 +21,7 @@
             // Also works fine for flash binaries
             "overrideLaunchCommands": [
                 "monitor reset init",
-                "load \"${command:raspberry-pi-pico.launchTargetPath}\""
+                "load \"${cwd}/build/Audible-Altimeter-Executable/src/Audible-Altimeter-Executable.elf\""
             ],
             "openOCDLaunchCommands": [
                 "adapter speed 5000"

@@ -30,7 +30,7 @@ class RP2350I2SDriver final : public IAudioDriver {
    * @param pio_block the pio block for
    */
   RP2350I2SDriver(PIO pio_block, uint pio_sm, int dma_channel,
-                  uint i2s_data_pin, uint i2s_clock_pin_base);
+                  uint i2s_data_pin, uint i2s_clock_pin_base, uint sample_rate);
   RP2350I2SDriver();
 
   bool play(std::int16_t* buffer, std::size_t buffer_length) override;

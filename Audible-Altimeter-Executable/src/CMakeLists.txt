@@ -7,8 +7,12 @@ add_executable(${EXE_NAME}
     )
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(${EXE_NAME} 0)
-pico_enable_stdio_usb(${EXE_NAME} 1)
+# pico_enable_stdio_uart(${EXE_NAME} 0)
+# pico_enable_stdio_usb(${EXE_NAME} 1)
+
+# this causes a segfault... why...
+pico_enable_stdio_uart(${EXE_NAME} 1)
+pico_enable_stdio_usb(${EXE_NAME} 0)
 
 # pull in common dependencies
 target_link_libraries(${EXE_NAME}
