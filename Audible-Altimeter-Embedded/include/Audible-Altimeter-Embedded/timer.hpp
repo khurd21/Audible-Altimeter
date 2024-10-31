@@ -19,6 +19,7 @@ class Timer : public ITimer {
   static bool timer_callback(repeating_timer_t* rt);
 
   repeating_timer_t m_timer;
+  bool m_timer_added{};
 };
 
 }  // namespace altimeter
