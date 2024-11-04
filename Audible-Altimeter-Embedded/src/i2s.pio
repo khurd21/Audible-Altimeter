@@ -46,8 +46,11 @@ static inline void pio_i2s_init(PIO pio, uint sm, uint offset, uint data_pin, ui
     sm_config_set_out_pins(&c, data_pin, 1);
     sm_config_set_sideset_pins(&c, clk_pin_base);
 
-    // sm_config_set_out_shift(&c, true, true, 32);
-    sm_config_set_out_shift(&c, false, true, 32);
+    constexpr bool shift_right { false }; // data is msb first
+    constexpr bool auto_pull { true };    // have the pio block load the next word automagically
+    constexpr uint num_bits_before_autopull { 32 } ;
+    sm_config_set_out_shift(&c, shift_right, auto_pull, num_bits_before_autopull);
+
     sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
 
     uint f_clk_sys = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_SYS);

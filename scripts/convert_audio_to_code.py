@@ -171,6 +171,7 @@ def collect_wav_samples_files(directory):
         for file in files:
             if file.endswith(".wav"):
                 wav_files.append(os.path.abspath(os.path.join(root, file)))
+        break # break to avoid recursing into child dirs
 
     for wav in wav_files:
         data = SampleMetadata(

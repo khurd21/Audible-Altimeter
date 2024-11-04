@@ -9,11 +9,6 @@
 #include <Audible-Altimeter/runner.hpp>
 #include <Audible-Altimeter/timer_interface.hpp>
 
-// bool callback_func(void* data) {
-//   printf("in callback\n");
-//   return true;
-// }
-
 int main() {
   stdio_init_all();
 
