@@ -11,36 +11,35 @@
 #include "path_to_data_folder.hpp"
 
 namespace altimeter::tests {
-
-using GatheredData = AltimeterData::GatheredData;
-using SensorData = IBarometricSensor::SensorData;
-using MeasurementSystem = AltimeterData::MeasurementSystem;
-
-struct TemperatureValues {
-  MeasurementSystem measurement_system;
-  SensorData input_data;
-  GatheredData expected_data;
-};
-
-struct PressureValues {
-  MeasurementSystem measurement_system;
-  std::vector<SensorData> input_data;
-  std::vector<GatheredData> expected_data;
-};
+namespace detail {
 
 inline auto from_string(const std::string& string) {
   if (string == "Metric") {
-    return MeasurementSystem::Metric;
+    return AltimeterData::MeasurementSystem::Metric;
   }
   if (string == "Imperial") {
-    return MeasurementSystem::Imperial;
+    return AltimeterData::MeasurementSystem::Imperial;
   }
   throw std::runtime_error("Invalid string for `MeasurementSystem.");
 }
 
+}  // namespace detail
+
+struct TemperatureValues {
+  AltimeterData::MeasurementSystem measurement_system;
+  IBarometricSensor::SensorData input_data;
+  AltimeterData::GatheredData expected_data;
+};
+
+struct PressureValues {
+  AltimeterData::MeasurementSystem measurement_system;
+  std::vector<IBarometricSensor::SensorData> input_data;
+  std::vector<AltimeterData::GatheredData> expected_data;
+};
+
 inline std::vector<TemperatureValues> get_temperature_test_data() {
-  std::ifstream ifstream(std::string(k_data_folder) +
-                         "temperature_test_data.json");
+  std::ifstream ifstream(k_data_folder +
+                         std::string("/temperature_test_data.json"));
 
   if (!ifstream) {
     throw std::runtime_error("Unable to open test data json.");
@@ -52,34 +51,30 @@ inline std::vector<TemperatureValues> get_temperature_test_data() {
   }
 
   for (const auto& item : json) {
-    TemperatureValues temperature_value;
+    IBarometricSensor::SensorData input_data(
+        item.at("input_data").at("temperature_c"),
+        item.at("input_data").at("pressure_pa"));
 
-    // Measurement System
-    temperature_value.measurement_system =
-        from_string(item.at("measurement_system"));
+    AltimeterData::GatheredData expected_data{
+        .altitude = item.at("expected_data").at("altitude"),
+        .temperature = item.at("expected_data").at("temperature"),
+        .measurement_system =
+            detail::from_string(item.at("measurement_system"))};
 
-    // Input Data
-    temperature_value.input_data.pressure =
-        item.at("input_data").at("pressure_pa");
-    temperature_value.input_data.temperature =
-        item.at("input_data").at("temperature_c");
+    TemperatureValues temperature_value{
+        .measurement_system =
+            detail::from_string(item.at("measurement_system")),
+        .input_data = input_data,
+        .expected_data = expected_data};
 
-    // Expected Data
-    temperature_value.expected_data.measurement_system =
-        temperature_value.measurement_system;
-    temperature_value.expected_data.altitude =
-        item.at("expected_data").at("altitude");
-    temperature_value.expected_data.temperature =
-        item.at("expected_data").at("temperature");
-
-    result.emplace_back(std::move(temperature_value));
+    result.emplace_back(temperature_value);
   }
   return result;
 }
 
 std::vector<PressureValues> get_pressure_test_data() {
-  std::ifstream ifstream(std::string(k_data_folder) +
-                         "pressure_test_data.json");
+  std::ifstream ifstream(k_data_folder +
+                         std::string("/pressure_test_data.json"));
   if (!ifstream) {
     throw std::runtime_error("Could not parse pressure test data json.");
   }
@@ -92,17 +87,17 @@ std::vector<PressureValues> get_pressure_test_data() {
   for (const auto& item : json) {
     PressureValues pressure_value;
     pressure_value.measurement_system =
-        from_string(item.at("measurement_system"));
+        detail::from_string(item.at("measurement_system"));
     for (const auto& input_data : item.at("input_data")) {
-      SensorData data;
+      IBarometricSensor::SensorData data;
       data.pressure = input_data.at("pressure_pa");
       data.temperature = input_data.at("temperature_c");
       pressure_value.input_data.emplace_back(std::move(data));
     }
     for (const auto& expected_data : item.at("expected_data")) {
-      GatheredData data;
+      AltimeterData::GatheredData data;
       data.measurement_system =
-          from_string(expected_data.at("measurement_system"));
+          detail::from_string(expected_data.at("measurement_system"));
       data.altitude = expected_data.at("altitude");
       data.temperature = expected_data.at("temperature");
       pressure_value.expected_data.emplace_back(std::move(data));

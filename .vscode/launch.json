@@ -69,7 +69,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/build/Audible-Altimeter/test/Audible-Altimeter-Tests",
+            "program": "${workspaceRoot}/build/bin/Audible-Altimeter-Tests",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

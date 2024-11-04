@@ -2,7 +2,6 @@
 #include <Audible-Altimeter/barometric_sensor_interface.hpp>
 #include <cmath>
 #include <concepts>
-#include <iostream>
 #include <optional>
 
 namespace {

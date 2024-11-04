@@ -1,0 +1,195 @@
+[
+    {
+        "temperature_c": 10,
+        "pressure_pa": 101325,
+        "altitude_ft": 0,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 100000,
+        "altitude_ft": 357,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 99732,
+        "altitude_ft": 430,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 9,
+        "pressure_pa": 100000,
+        "altitude_ft": 357,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 99329,
+        "altitude_ft": 539,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 8,
+        "pressure_pa": 97650,
+        "altitude_ft": 1001,
+        "plays": "TEN",
+        "entered_idle_state": false,
+        "entered_active_state": true
+    },
+    {
+        "temperature_c": 8,
+        "pressure_pa": 97750,
+        "altitude_ft": 973,
+        "plays": "TEN",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 9,
+        "pressure_pa": 98018,
+        "altitude_ft": 899,
+        "plays": "NINE",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 98518,
+        "altitude_ft": 761,
+        "plays": "EIGHT",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 98818,
+        "altitude_ft": 679,
+        "plays": "SEVEN",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 99200,
+        "altitude_ft": 575,
+        "plays": "SIX",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99202,
+        "altitude_ft": 574,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99506,
+        "altitude_ft": 491,
+        "plays": "FIVE",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99413,
+        "altitude_ft": 517,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99506,
+        "altitude_ft": 491,
+        "plays": "FIVE",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99606,
+        "altitude_ft": 464,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99652,
+        "altitude_ft": 452,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 99606,
+        "altitude_ft": 464,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99708,
+        "altitude_ft": 436,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99724,
+        "altitude_ft": 432,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 99800,
+        "altitude_ft": 411,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99862,
+        "altitude_ft": 394,
+        "plays": "FOUR",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 100362,
+        "altitude_ft": 259,
+        "plays": "THREE",
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 10,
+        "pressure_pa": 100595,
+        "altitude_ft": 196,
+        "plays": "TWO",
+        "entered_idle_state": true,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 99862,
+        "altitude_ft": 394,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    },
+    {
+        "temperature_c": 11,
+        "pressure_pa": 100362,
+        "altitude_ft": 259,
+        "entered_idle_state": false,
+        "entered_active_state": false
+    }
+]

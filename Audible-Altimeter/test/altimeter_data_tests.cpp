@@ -26,7 +26,7 @@ class AltimeterDataBaseTests : public TestWithParam<T> {
     m_altimeter_data_under_test = AltimeterData(&m_mock_barometric_sensor);
   }
 
-  void set_measurement_system(MeasurementSystem system) {
+  void set_measurement_system(AltimeterData::MeasurementSystem system) {
     m_altimeter_data_under_test =
         AltimeterData(&m_mock_barometric_sensor, system);
   }

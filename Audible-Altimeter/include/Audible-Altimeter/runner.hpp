@@ -34,13 +34,15 @@ class Runner {
    */
   void run();
 
+ protected:
+  bool read_event();
+
  private:
   enum class State {
     IDLE,
     ACTIVE,
   };
 
-  bool read_event();
   void enter_state(State state);
   static bool read_event_callback(void* user_data);
 

@@ -7,7 +7,6 @@
 #include <array>
 #include <chrono>
 #include <cstdio>
-#include <iostream>
 #include <limits>
 
 namespace {
@@ -55,6 +54,8 @@ constexpr std::array<AltitudeToAudioSample, 29> k_altitudes{
                           AUDIO_SAMPLE_ID::END_SAMPLES),
 };
 
+constexpr auto one_thousand_index{8};
+
 }  // namespace
 
 namespace altimeter {
@@ -85,12 +86,11 @@ bool Runner::read_event() {
   if (m_state == State::IDLE && current_altitude > 1'000) {
     enter_state(State::ACTIVE);
     m_audio_player.play(AUDIO_SAMPLE_ID::TEN);
+    m_index = one_thousand_index;
   } else if (m_state == State::ACTIVE) {
-    const auto previous_index{m_index};
-    while (current_altitude > k_altitudes[m_index + 1].altitude) {
+    if (current_altitude > k_altitudes[m_index + 1].altitude) {
       ++m_index;
-    }
-    if (current_altitude < k_altitudes[m_index].altitude) {
+    } else if (current_altitude < k_altitudes[m_index].altitude) {
       m_audio_player.play(k_altitudes[m_index].sample_id);
       --m_index;
     }
