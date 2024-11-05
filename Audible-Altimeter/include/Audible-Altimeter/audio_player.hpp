@@ -1,8 +1,9 @@
 #ifndef AUDIBLE_ALTIMETER_AUDIO_PLAYER_HPP
 #define AUDIBLE_ALTIMETER_AUDIO_PLAYER_HPP
 
-#include <Audible-Altimeter/sample_id.hpp>
 #include <cstdint>
+
+#include "sample_id.hpp"
 
 namespace altimeter {
 

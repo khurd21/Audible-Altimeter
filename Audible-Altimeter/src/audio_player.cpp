@@ -1,12 +1,12 @@
 #include <Audible-Altimeter/audio_driver_interface.hpp>
 #include <Audible-Altimeter/audio_player.hpp>
-#include <Audible-Altimeter/sample_id.hpp>
 #include <array>
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
 
 #include "audio_samples.hpp"
+#include "sample_id.hpp"
 
 namespace altimeter {
 

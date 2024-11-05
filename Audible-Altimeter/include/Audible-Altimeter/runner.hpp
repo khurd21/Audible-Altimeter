@@ -6,9 +6,10 @@
 #include <Audible-Altimeter/audio_player.hpp>
 #include <Audible-Altimeter/barometric_sensor_interface.hpp>
 #include <Audible-Altimeter/device_description_interface.hpp>
-#include <Audible-Altimeter/sample_id.hpp>
 #include <Audible-Altimeter/timer_interface.hpp>
 #include <array>
+
+#include "sample_id.hpp"
 
 namespace altimeter {
 
