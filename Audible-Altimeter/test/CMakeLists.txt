@@ -20,8 +20,11 @@ FetchContent_MakeAvailable(json)
 
 set(data
   data/barometric_sensor_test_data.hpp
+  data/runner_test_data.hpp
+
   data/temperature_test_data.json
-  data/pressure_test_data.json)
+  data/pressure_test_data.json
+  data/runner_test_data.json)
 
 set(mocks
   mocks/audio_driver_interface.hpp
@@ -30,10 +33,11 @@ set(mocks
   mocks/timer_interface.hpp)
 
 set(tests
-  altimeter_data_tests.cpp)
+  altimeter_data_tests.cpp
+  runner_tests.cpp)
   
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(DATA_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/data/")
+set(DATA_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/data")
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/data/path_to_data_folder.hpp.in
   ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/path_to_data_folder.hpp
