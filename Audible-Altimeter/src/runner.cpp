@@ -25,33 +25,33 @@ constexpr std::array<AltitudeToAudioSample, 29> k_altitudes{
     AltitudeToAudioSample(200, AUDIO_SAMPLE_ID::TWO),
     AltitudeToAudioSample(300, AUDIO_SAMPLE_ID::THREE),
     AltitudeToAudioSample(400, AUDIO_SAMPLE_ID::FOUR),
-    // AltitudeToAudioSample(500, AUDIO_SAMPLE_ID::FIVE),
-    // AltitudeToAudioSample(600, AUDIO_SAMPLE_ID::SIX),
-    // AltitudeToAudioSample(700, AUDIO_SAMPLE_ID::SEVEN),
-    // AltitudeToAudioSample(800, AUDIO_SAMPLE_ID::EIGHT),
-    // AltitudeToAudioSample(900, AUDIO_SAMPLE_ID::NINE),
-    // AltitudeToAudioSample(1'000, AUDIO_SAMPLE_ID::TEN),
-    // AltitudeToAudioSample(1'500, AUDIO_SAMPLE_ID::FIFTEEN),
-    // AltitudeToAudioSample(2'000, AUDIO_SAMPLE_ID::TWO),
-    // AltitudeToAudioSample(2'500, AUDIO_SAMPLE_ID::TWO_POINT_FIVE),
-    // AltitudeToAudioSample(3'000, AUDIO_SAMPLE_ID::THREE),
-    // AltitudeToAudioSample(3'500, AUDIO_SAMPLE_ID::THREE_POINT_FIVE),
-    // AltitudeToAudioSample(4'000, AUDIO_SAMPLE_ID::FOUR),
-    // AltitudeToAudioSample(4'500, AUDIO_SAMPLE_ID::FOUR_POINT_FIVE),
-    // AltitudeToAudioSample(5'000, AUDIO_SAMPLE_ID::FIVE),
-    // AltitudeToAudioSample(5'500, AUDIO_SAMPLE_ID::FIVE_POINT_FIVE),
-    // AltitudeToAudioSample(6'000, AUDIO_SAMPLE_ID::SIX),
-    // AltitudeToAudioSample(7'000, AUDIO_SAMPLE_ID::SEVEN),
-    // AltitudeToAudioSample(8'000, AUDIO_SAMPLE_ID::EIGHT),
-    // AltitudeToAudioSample(9'000, AUDIO_SAMPLE_ID::NINE),
-    // AltitudeToAudioSample(10'000, AUDIO_SAMPLE_ID::TEN),
-    // AltitudeToAudioSample(11'000, AUDIO_SAMPLE_ID::ELEVEN),
-    // AltitudeToAudioSample(12'000, AUDIO_SAMPLE_ID::TWELVE),
-    // AltitudeToAudioSample(13'000, AUDIO_SAMPLE_ID::THIRTEEN),
-    // AltitudeToAudioSample(14'000, AUDIO_SAMPLE_ID::FOURTEEN),
-    // AltitudeToAudioSample(15'000, AUDIO_SAMPLE_ID::FIFTEEN),
-    // AltitudeToAudioSample(std::numeric_limits<int>::max(),
-    //                       AUDIO_SAMPLE_ID::END_SAMPLES),
+    AltitudeToAudioSample(500, AUDIO_SAMPLE_ID::FIVE),
+    AltitudeToAudioSample(600, AUDIO_SAMPLE_ID::SIX),
+    AltitudeToAudioSample(700, AUDIO_SAMPLE_ID::SEVEN),
+    AltitudeToAudioSample(800, AUDIO_SAMPLE_ID::EIGHT),
+    AltitudeToAudioSample(900, AUDIO_SAMPLE_ID::NINE),
+    AltitudeToAudioSample(1'000, AUDIO_SAMPLE_ID::TEN),
+    AltitudeToAudioSample(1'500, AUDIO_SAMPLE_ID::FIFTEEN),
+    AltitudeToAudioSample(2'000, AUDIO_SAMPLE_ID::TWO),
+    AltitudeToAudioSample(2'500, AUDIO_SAMPLE_ID::TWO_POINT_FIVE),
+    AltitudeToAudioSample(3'000, AUDIO_SAMPLE_ID::THREE),
+    AltitudeToAudioSample(3'500, AUDIO_SAMPLE_ID::THREE_POINT_FIVE),
+    AltitudeToAudioSample(4'000, AUDIO_SAMPLE_ID::FOUR),
+    AltitudeToAudioSample(4'500, AUDIO_SAMPLE_ID::FOUR_POINT_FIVE),
+    AltitudeToAudioSample(5'000, AUDIO_SAMPLE_ID::FIVE),
+    AltitudeToAudioSample(5'500, AUDIO_SAMPLE_ID::FIVE_POINT_FIVE),
+    AltitudeToAudioSample(6'000, AUDIO_SAMPLE_ID::SIX),
+    AltitudeToAudioSample(7'000, AUDIO_SAMPLE_ID::SEVEN),
+    AltitudeToAudioSample(8'000, AUDIO_SAMPLE_ID::EIGHT),
+    AltitudeToAudioSample(9'000, AUDIO_SAMPLE_ID::NINE),
+    AltitudeToAudioSample(10'000, AUDIO_SAMPLE_ID::TEN),
+    AltitudeToAudioSample(11'000, AUDIO_SAMPLE_ID::ELEVEN),
+    AltitudeToAudioSample(12'000, AUDIO_SAMPLE_ID::TWELVE),
+    AltitudeToAudioSample(13'000, AUDIO_SAMPLE_ID::THIRTEEN),
+    AltitudeToAudioSample(14'000, AUDIO_SAMPLE_ID::FOURTEEN),
+    AltitudeToAudioSample(15'000, AUDIO_SAMPLE_ID::FIFTEEN),
+    AltitudeToAudioSample(std::numeric_limits<int>::max(),
+                          AUDIO_SAMPLE_ID::END_SAMPLES),
 };
 
 constexpr auto one_thousand_index{8};
@@ -78,7 +78,6 @@ Runner::Runner(IDeviceDescription* tiny, IBarometricSensor* barometric_sensor,
 void Runner::run() { enter_state(State::IDLE); };
 
 bool Runner::read_event() {
-  static std::size_t i{0};
   const auto data{m_altimeter_data.get_data()};
   if (!data) {
     return true;
@@ -99,8 +98,6 @@ bool Runner::read_event() {
       enter_state(State::IDLE);
     }
   }
-  m_audio_player.play(k_altitudes[i++].sample_id);
-  if (i == k_altitudes.size() - 1) i = 0;
 
   printf("Data T: %d degree F, P: %d ft\n", data->temperature, data->altitude);
   m_last_altitude_reading = current_altitude;
