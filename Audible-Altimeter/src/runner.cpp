@@ -98,6 +98,7 @@ bool Runner::read_event() {
       enter_state(State::IDLE);
     }
   }
+
   printf("Data T: %d degree F, P: %d ft\n", data->temperature, data->altitude);
   m_last_altitude_reading = current_altitude;
   return true;

@@ -45,7 +45,7 @@ class SampleMetadata:
     samples: list[int]
     num_samples: int
 
-SAMPLE_RATE = 0
+SAMPLE_RATE = None
 TOTAL_NUMBER_OF_BYTES = 0
 
 def get_samples(wav_file):
@@ -53,9 +53,16 @@ def get_samples(wav_file):
     samples = []
     with wave.open(wav_file, 'rb') as wav:
         assert wav.getsampwidth() == 2, "WAV file is not 16-bit"
-        assert wav.getframerate() == 11025, "WAV file is not 11025 Hz"
         assert wav.getnchannels() == 1, "WAV file is not mono"
-        SAMPLE_RATE = wav.getframerate()
+
+        if SAMPLE_RATE is None:
+            SAMPLE_RATE = wav.getframerate()
+        elif SAMPLE_RATE != wav.getframerate():
+            error_str = f"error {wav_file} has framerate {wav.getframerate()} which differs from other files"
+            print(error_str)
+            assert False, error_str
+
+
 
         # Read frames and convert to 16-bit signed integers
         num_samples = wav.getnframes()
@@ -164,6 +171,7 @@ def collect_wav_samples_files(directory):
         for file in files:
             if file.endswith(".wav"):
                 wav_files.append(os.path.abspath(os.path.join(root, file)))
+        break # break to avoid recursing into child dirs
 
     for wav in wav_files:
         data = SampleMetadata(

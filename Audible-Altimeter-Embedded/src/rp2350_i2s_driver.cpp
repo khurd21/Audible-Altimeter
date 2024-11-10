@@ -8,6 +8,7 @@
 #include "hardware/dma.h"
 #include "hardware/pio.h"
 #include "i2s.pio.h"
+#include "sample_id.hpp"
 
 namespace altimeter {
 
@@ -16,7 +17,8 @@ RP2350I2SDriver::RP2350I2SDriver() : m_dma_channel{AUDIO_DMA_CHANNEL} {
 
   pio_i2s_init(AUDIO_PIO_BLOCK, AUDIO_PIO_STATE_MACHINE, pio_offset,
                altimeter::board_descriptions::LED_PIN_I2S_DATA_PIN,
-               altimeter::board_descriptions::LED_PIN_I2S_CLK_BASE);
+               altimeter::board_descriptions::LED_PIN_I2S_CLK_BASE,
+               SAMPLE_RATE);
 
   dma_channel_config dma_config = dma_channel_get_default_config(m_dma_channel);
 
@@ -34,6 +36,7 @@ RP2350I2SDriver::RP2350I2SDriver() : m_dma_channel{AUDIO_DMA_CHANNEL} {
 
   constexpr bool DONT_START_TRANSFER{false};
   constexpr uint TRANSFER_COUNT{0};
+  // pass nullptr when there's no data to read
   constexpr void* READ_ADDR{nullptr};
   dma_channel_configure(m_dma_channel, &dma_config,
                         &((AUDIO_PIO_BLOCK)->txf[0]),  // Write address
@@ -44,11 +47,13 @@ RP2350I2SDriver::RP2350I2SDriver() : m_dma_channel{AUDIO_DMA_CHANNEL} {
 }
 
 RP2350I2SDriver::RP2350I2SDriver(PIO pio_block, uint pio_sm, int dma_channel,
-                                 uint i2s_data_pin, uint i2s_clock_pin_base)
+                                 uint i2s_data_pin, uint i2s_clock_pin_base,
+                                 uint sample_rate)
     : m_dma_channel{dma_channel} {
   uint pio_offset = pio_add_program(pio_block, &pio_i2s_program);
 
-  pio_i2s_init(pio_block, pio_sm, pio_offset, i2s_data_pin, i2s_clock_pin_base);
+  pio_i2s_init(pio_block, pio_sm, pio_offset, i2s_data_pin, i2s_clock_pin_base,
+               sample_rate);
 
   dma_channel_config dma_config = dma_channel_get_default_config(m_dma_channel);
 
