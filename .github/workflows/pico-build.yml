@@ -7,6 +7,11 @@ on:
   pull_request:
     branches:
       - main
+  release:
+    types: [published, prereleased]
+
+permissions:
+  contents: write 
 
 jobs:
   build:
@@ -51,3 +56,25 @@ jobs:
         with:
           name: Audible-Altimeter-Executable
           path: build/Audible-Altimeter-Executable/src/Audible-Altimeter-Executable.uf2
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Audible-Altimeter-Executable
+          path: build
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: build/Audible-Altimeter-Executable.uf2
+          asset_name: Audible-Altimeter-Executable.uf2
+          asset_content_type: application/octet-stream
