@@ -47,6 +47,7 @@ class SampleMetadata:
 
 SAMPLE_RATE = None
 TOTAL_NUMBER_OF_BYTES = 0
+MAX_NUMBER_OF_BYTES = 0
 
 def get_samples(wav_file):
     global SAMPLE_RATE
@@ -111,20 +112,20 @@ def create_header_file_for_samples(samples: list[SampleMetadata]):
 #define AUDIBLE_ALTIMETER_{AUDIO_SAMPLES_HEADER_FILE_NAME.upper()}_H
 
 #include "{AUDIO_SAMPLE_ID_HEADER_FILE_NAME}.hpp"
-
-#include <cstdint>
-#include <array>\n
 '''
+    for sample in samples:
+        header_file_contents += f'#include "{sample.sample_name}.hpp"\n'
     header_file_contents += '''
+#include <cstdint>
+#include <array>
+
 struct Audio_sample_location_and_size {
-    std::int16_t* location;
+    const std::int16_t* location{};
     std::size_t size;
 };\n
 '''
-    header_file_contents += f'inline constexpr std::size_t TOTAL_NUMBER_OF_BYTES {{ {TOTAL_NUMBER_OF_BYTES} }};\n'
-    for sample in samples:
-        header_file_contents += f'extern std::array<std::int16_t, {sample.num_samples}> {sample.sample_name};\n'
-
+    header_file_contents += f'inline constexpr std::size_t TOTAL_NUMBER_OF_BYTES{{ {TOTAL_NUMBER_OF_BYTES} }};\n'
+    header_file_contents += f'inline constexpr std::size_t MAX_NUMBER_OF_BYTES{{ {MAX_NUMBER_OF_BYTES} }};\n'
     header_file_contents += '''
 using sample_lookup_t = std::array<Audio_sample_location_and_size,
                         static_cast<std::size_t>(AUDIO_SAMPLE_ID::NUM_SAMPLES)>;
@@ -141,30 +142,31 @@ inline constexpr sample_lookup_t sample_lookup = {
         f.write(header_file_contents)  # Write each sample name on a new line
 
 
-def create_cpp_files(samples: list[SampleMetadata]):
-    # for sample in samples:
-
-
+def create_hpp_files(samples: list[SampleMetadata]):
     for sample in samples:
-        cpp_file_path = os.path.abspath(os.path.join(AUDIO_OUTPUT_DIRECTORY, f'{sample.sample_name}.cpp'))
-
+        cpp_file_path = os.path.abspath(os.path.join(AUDIO_OUTPUT_DIRECTORY, f'{sample.sample_name}.hpp'))
         cpp_file_contents = generated_warning
+        cpp_file_contents += f'''
+#ifndef AUDIBLE_ALTIMETER_{sample.sample_name.upper()}_HPP
+#define AUDIBLE_ALTIMETER_{sample.sample_name.upper()}_HPP
+'''
         # Create the C++ array string
-        cpp_file_contents += f'''#include "{AUDIO_SAMPLES_HEADER_FILE_NAME}.hpp"
-
+        cpp_file_contents += f'''
 #include <array>
 #include <cstdint>\n
 '''
 
-        cpp_file_contents += f'std::array<std::int16_t, {sample.num_samples}> {sample.sample_name} = {{\n'
+        cpp_file_contents += f'inline constexpr std::array<std::int16_t, {sample.num_samples}> {sample.sample_name} = {{\n'
         cpp_file_contents += ',\n'.join(f'    {num}' for num in sample.samples)
-        cpp_file_contents += '\n};'
+        cpp_file_contents += '\n};\n'
+        cpp_file_contents += '#endif'
         with open(cpp_file_path, 'w') as f:
             f.write(cpp_file_contents)  # Write each sample name on a new line
 
 def collect_wav_samples_files(directory):
     sample_list: list[SampleMetadata] = []
     global TOTAL_NUMBER_OF_BYTES
+    global MAX_NUMBER_OF_BYTES
 
     wav_files = []
     for root, _, files in os.walk(directory):
@@ -179,6 +181,7 @@ def collect_wav_samples_files(directory):
             samples=get_samples(wav), num_samples=len(get_samples(wav)))
         sample_list.append(data)
         TOTAL_NUMBER_OF_BYTES += (data.num_samples * 2)
+        MAX_NUMBER_OF_BYTES = max(MAX_NUMBER_OF_BYTES, data.num_samples)
 
     return sample_list
 
@@ -187,7 +190,7 @@ def main():
     samples = collect_wav_samples_files(AUDIO_FILE_DIRECTORY)
     create_header_file_for_samples(samples)
     create_header_file_for_sample_id(samples)
-    create_cpp_files(samples)
+    create_hpp_files(samples)
 
 if __name__ == '__main__':
     main()

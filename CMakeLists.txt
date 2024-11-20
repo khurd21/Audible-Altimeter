@@ -27,6 +27,7 @@ if (${IS_PICO})
     # Pull in Raspberry Pi Pico SDK (must be before project)
     set(PICO_BOARD pico2 CACHE STRING "Tiny2350")
     include(pico_sdk_import.cmake)
+    include(pico_extras_import.cmake)
 
 endif()
 

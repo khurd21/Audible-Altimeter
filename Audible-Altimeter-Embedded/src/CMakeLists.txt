@@ -30,6 +30,7 @@ if (${IS_PICO})
         hardware_gpio
         hardware_clocks
         pico_stdlib
+        pico_audio_i2s
         BMP3_SensorAPI::BMP3_SensorAPI
         )
     pico_generate_pio_header(${LIB_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/i2s.pio)

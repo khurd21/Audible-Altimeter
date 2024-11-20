@@ -31,6 +31,13 @@ jobs:
           ref: master
           path: pico-sdk
 
+      - name: Checkout pico-extras/master
+        uses: actions/checkout@v4
+        with:
+          repository: raspberrypi/pico-extras
+          ref: master
+          path: pico-extras
+
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v2
         with:
@@ -45,7 +52,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -G Ninja -DPICO_SDK_PATH=$GITHUB_WORKSPACE/pico-sdk -DIS_PICO=TRUE -B build
+          cmake -G Ninja -DPICO_SDK_PATH=$GITHUB_WORKSPACE/pico-sdk -DPICO_EXTRAS_PATH=$GITHUB_WORKSPACE/pico-extras -DIS_PICO=TRUE -B build
 
       - name: Build project
         run: |

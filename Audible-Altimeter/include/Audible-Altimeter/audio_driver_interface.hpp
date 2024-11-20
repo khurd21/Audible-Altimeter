@@ -9,8 +9,8 @@ class IAudioDriver {
  public:
   ~IAudioDriver() = default;
 
-  virtual bool play(std::int16_t* buffer, std::size_t buffer_length) = 0;
-
+  virtual bool play(const std::int16_t* buffer, std::size_t buffer_length) = 0;
+  virtual void set_volume(std::uint8_t volume) = 0;
   virtual bool is_playing() = 0;
 };
 
