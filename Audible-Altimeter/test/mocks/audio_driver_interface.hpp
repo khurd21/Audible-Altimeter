@@ -8,7 +8,8 @@
 
 class MockAudioDriver final : public altimeter::IAudioDriver {
  public:
-  MOCK_METHOD(bool, play, (std::int16_t*, std::size_t), (override));
+  MOCK_METHOD(bool, play, (const std::int16_t*, std::size_t), (override));
+  MOCK_METHOD(void, set_volume, (std::uint8_t), (override));
   MOCK_METHOD(bool, is_playing, (), (override));
 };
 

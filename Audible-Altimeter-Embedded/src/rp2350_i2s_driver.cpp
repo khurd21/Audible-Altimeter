@@ -1,99 +1,71 @@
-#include <stdio.h>
+#include <hardware/dma.h>
+#include <hardware/pio.h>
+#include <pico/audio_i2s.h>
 
 #include <Audible-Altimeter-Embedded/rp2350_i2s_driver.hpp>
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
+#include <cstdio>
 
+#include "audio_samples.hpp"
 #include "board_descriptions.hpp"
-#include "hardware/dma.h"
-#include "hardware/pio.h"
 #include "i2s.pio.h"
 #include "sample_id.hpp"
 
+namespace {
+
+audio_buffer_pool_t* k_audio_buffer_pool{};
+
+}  // namespace
+
 namespace altimeter {
 
-RP2350I2SDriver::RP2350I2SDriver() : m_dma_channel{AUDIO_DMA_CHANNEL} {
-  uint pio_offset = pio_add_program(AUDIO_PIO_BLOCK, &pio_i2s_program);
-
-  pio_i2s_init(AUDIO_PIO_BLOCK, AUDIO_PIO_STATE_MACHINE, pio_offset,
-               altimeter::board_descriptions::LED_PIN_I2S_DATA_PIN,
-               altimeter::board_descriptions::LED_PIN_I2S_CLK_BASE,
-               SAMPLE_RATE);
-
-  dma_channel_config dma_config = dma_channel_get_default_config(m_dma_channel);
-
-  channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_16);
-
-  constexpr bool INCREMENT_READ_ADDR{true};
-  channel_config_set_read_increment(&dma_config, INCREMENT_READ_ADDR);
-
-  constexpr bool DONT_INCREMENT_WRITE_ADDR{false};
-  channel_config_set_write_increment(&dma_config, DONT_INCREMENT_WRITE_ADDR);
-
-  channel_config_set_dreq(
-      &dma_config,
-      pio_get_dreq(AUDIO_PIO_BLOCK, AUDIO_PIO_STATE_MACHINE, true));
-
-  constexpr bool DONT_START_TRANSFER{false};
-  constexpr uint TRANSFER_COUNT{0};
-  // pass nullptr when there's no data to read
-  constexpr void* READ_ADDR{nullptr};
-  dma_channel_configure(m_dma_channel, &dma_config,
-                        &((AUDIO_PIO_BLOCK)->txf[0]),  // Write address
-                        READ_ADDR,           // Don't provide a read address yet
-                        TRANSFER_COUNT,      // number bytes to transfer
-                        DONT_START_TRANSFER  // don't start transfer
-  );
-}
-
-RP2350I2SDriver::RP2350I2SDriver(PIO pio_block, uint pio_sm, int dma_channel,
-                                 uint i2s_data_pin, uint i2s_clock_pin_base,
-                                 uint sample_rate)
-    : m_dma_channel{dma_channel} {
-  uint pio_offset = pio_add_program(pio_block, &pio_i2s_program);
-
-  pio_i2s_init(pio_block, pio_sm, pio_offset, i2s_data_pin, i2s_clock_pin_base,
-               sample_rate);
-
-  dma_channel_config dma_config = dma_channel_get_default_config(m_dma_channel);
-
-  channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_16);
-
-  constexpr bool INCREMENT_READ_ADDR{true};
-  channel_config_set_read_increment(&dma_config, INCREMENT_READ_ADDR);
-
-  constexpr bool DONT_INCREMENT_WRITE_ADDR{false};
-  channel_config_set_write_increment(&dma_config, DONT_INCREMENT_WRITE_ADDR);
-
-  channel_config_set_dreq(&dma_config, pio_get_dreq(pio_block, pio_sm, true));
-
-  constexpr bool DONT_START_TRANSFER{false};
-  constexpr uint TRANSFER_COUNT{0};
-  constexpr void* READ_ADDR{nullptr};
-  dma_channel_configure(m_dma_channel, &dma_config,
-                        &pio_block->txf[0],  // Write address
-                        READ_ADDR,           // Don't provide a read address yet
-                        TRANSFER_COUNT,      // number bytes to transfer
-                        DONT_START_TRANSFER  // don't start transfer
-  );
-}
-
-bool RP2350I2SDriver::play(std::int16_t* buffer, std::size_t buffer_length) {
-  bool rval{true};
-  if (!is_playing()) {
-    constexpr bool DONT_START{false};
-    dma_channel_set_trans_count(m_dma_channel, buffer_length, DONT_START);
-
-    constexpr bool START{true};
-    dma_channel_set_read_addr(m_dma_channel, buffer, START);
-  } else {
-    rval = false;
+RP2350I2SDriver::RP2350I2SDriver() {
+  const audio_i2s_config_t config{
+      .data_pin = board_descriptions::SPEAKER_I2S_CLK_BASE_PIN,
+      .clock_pin_base = board_descriptions::SPEAKER_I2S_CLK_BASE_PIN,
+      .dma_channel = board_descriptions::AUDIO_DMA_CHANNEL,
+      .pio_sm = board_descriptions::AUDIO_PIO_STATE_MACHINE,
+  };
+  const audio_format_t format{
+      .sample_freq = SAMPLE_RATE,
+      .format = AUDIO_BUFFER_FORMAT_PCM_S16,
+      .channel_count = 1,  // Mono
+  };
+  const auto applied_format{audio_i2s_setup(&format, &config)};
+  if (!applied_format) {
+    printf("Could not initialize I2S audio.\n");
   }
-  return rval;
+
+  if (!audio_i2s_connect(k_audio_buffer_pool)) {
+    printf("Could not connect audio buffer pool to I2S.\n");
+  }
+
+  audio_i2s_set_enabled(true);
 }
 
-bool RP2350I2SDriver::is_playing() {
-  return dma_channel_is_busy(m_dma_channel);
+bool RP2350I2SDriver::play(const std::int16_t* sample,
+                           std::size_t sample_size) {
+  const auto buffer{take_audio_buffer(k_audio_buffer_pool, true)};
+  const auto samples{(std::int16_t*)buffer->buffer->bytes};
+  const auto volume_level{m_volume / 100.0f};
+
+  for (std::uint32_t i{}; i < sample_size && i < buffer->max_sample_count;
+       ++i) {
+    samples[i] = static_cast<std::int16_t>(sample[i] * volume_level);
+  }
+  buffer->sample_count = std::min(static_cast<std::uint32_t>(sample_size),
+                                  buffer->max_sample_count);
+  give_audio_buffer(k_audio_buffer_pool, buffer);
+  return true;
 }
+
+void RP2350I2SDriver::set_volume(std::uint8_t volume) {
+  m_volume = std::min(volume, static_cast<std::uint8_t>(100));
+  printf("Volume set to: %d percent.", m_volume);
+}
+
+bool RP2350I2SDriver::is_playing() { return false; }
 
 }  // namespace altimeter

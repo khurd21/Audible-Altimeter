@@ -29,15 +29,14 @@ class RP2350I2SDriver final : public IAudioDriver {
    *
    * @param pio_block the pio block for
    */
-  RP2350I2SDriver(PIO pio_block, uint pio_sm, int dma_channel,
-                  uint i2s_data_pin, uint i2s_clock_pin_base, uint sample_rate);
   RP2350I2SDriver();
 
-  bool play(std::int16_t* buffer, std::size_t buffer_length) override;
+  bool play(const std::int16_t* buffer, std::size_t buffer_length) override;
+  void set_volume(std::uint8_t volume) override;
   bool is_playing() override;
 
  private:
-  int m_dma_channel{0};
+  std::uint8_t m_volume{};
 };
 
 }  // namespace altimeter
