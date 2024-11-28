@@ -38,7 +38,8 @@ class AltimeterDataBaseTests : public TestWithParam<T> {
 class AltimeterDataTemperatureTests
     : public AltimeterDataBaseTests<TemperatureValues> {};
 
-TEST_P(AltimeterDataTemperatureTests, Temp) {
+TEST_P(AltimeterDataTemperatureTests,
+       AltimeterDataCorrectlyReadsTemperatureData) {
   const auto& params{GetParam()};
   set_measurement_system(params.measurement_system);
   EXPECT_CALL(m_mock_barometric_sensor, get_sensor_data)
@@ -57,7 +58,7 @@ INSTANTIATE_TEST_SUITE_P(TemperatureTests, AltimeterDataTemperatureTests,
 class AltimeterDataPressureTests
     : public AltimeterDataBaseTests<PressureValues> {};
 
-TEST_P(AltimeterDataPressureTests, Pressure) {
+TEST_P(AltimeterDataPressureTests, AltimeterDataCorrectlyReadsPressureData) {
   const auto& params{GetParam()};
   ASSERT_FALSE(params.expected_data.empty());
   set_measurement_system(params.measurement_system);
