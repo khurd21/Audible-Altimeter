@@ -12,15 +12,16 @@
 
 namespace altimeter {
 
-RP2350I2SDriver::RP2350I2SDriver() : m_dma_channel{AUDIO_DMA_CHANNEL} {
+RP2350I2SDriver::RP2350I2SDriver()
+    : m_dma_channel{board_descriptions::AUDIO_DMA_CHANNEL} {
   uint pio_offset = pio_add_program(AUDIO_PIO_BLOCK, &pio_i2s_program);
 
-  pio_i2s_init(AUDIO_PIO_BLOCK, AUDIO_PIO_STATE_MACHINE, pio_offset,
-               altimeter::board_descriptions::LED_PIN_I2S_DATA_PIN,
-               altimeter::board_descriptions::LED_PIN_I2S_CLK_BASE,
-               SAMPLE_RATE);
+  pio_i2s_init(AUDIO_PIO_BLOCK, board_descriptions::AUDIO_PIO_STATE_MACHINE,
+               pio_offset, board_descriptions::I2S_DATA_PIN,
+               board_descriptions::I2S_CLK_BASE_PIN, SAMPLE_RATE);
 
-  dma_channel_config dma_config = dma_channel_get_default_config(m_dma_channel);
+  dma_channel_config dma_config =
+      dma_channel_get_default_config(board_descriptions::AUDIO_DMA_CHANNEL);
 
   channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_16);
 
@@ -32,7 +33,8 @@ RP2350I2SDriver::RP2350I2SDriver() : m_dma_channel{AUDIO_DMA_CHANNEL} {
 
   channel_config_set_dreq(
       &dma_config,
-      pio_get_dreq(AUDIO_PIO_BLOCK, AUDIO_PIO_STATE_MACHINE, true));
+      pio_get_dreq(AUDIO_PIO_BLOCK, board_descriptions::AUDIO_PIO_STATE_MACHINE,
+                   true));
 
   constexpr bool DONT_START_TRANSFER{false};
   constexpr uint TRANSFER_COUNT{0};

@@ -37,8 +37,4 @@ if (${IS_PICO})
     target_include_directories(${LIB_NAME} PUBLIC ${include_dir})
 
     target_include_directories(${LIB_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../Audible-Altimeter/include)
-else()
-    add_library(${LIB_NAME} INTERFACE)
-    add_library(${LIB_NAME}::Audible-Altimeter-Embedded ALIAS ${LIB_NAME})
-    target_include_directories(${LIB_NAME} INTERFACE ${include_dir})
 endif()
